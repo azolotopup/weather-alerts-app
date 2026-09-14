@@ -1,13 +1,8 @@
 import { useMemo } from 'react';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
-import {
-  API_URL,
-  fetchAlertPage,
-  retryDelay,
-  shouldRetry,
-  WeatherApiError,
-} from '../api/weatherApi';
-import { mergeAlerts, toApiFilters } from '../lib/alerts';
+import { API_URL, WeatherApiError } from '../api/weatherApi';
+import { weatherAlertsOptions } from '../api/weatherQueries';
+import { mergeAlerts } from '../lib/alerts';
 import type { AlertFilters } from '../lib/types';
 
 const hasRepeatedLink = (next: string | undefined, previousPages: unknown[]): boolean => {
@@ -23,21 +18,8 @@ const hasRepeatedLink = (next: string | undefined, previousPages: unknown[]): bo
 
 export const useWeatherAlerts = (filters: AlertFilters = {}) => {
   const queryClient = useQueryClient();
-  const apiFilters = toApiFilters(filters);
-  const queryKey = ['weatherAlerts', apiFilters] as const;
-
-  const query = useInfiniteQuery({
-    queryKey,
-    queryFn: ({ pageParam, signal }) => fetchAlertPage(apiFilters, pageParam, signal),
-    initialPageParam: undefined as string | undefined,
-    getNextPageParam: page => page.next,
-    retry: shouldRetry,
-    retryDelay,
-    staleTime: Infinity,
-    gcTime: 60_000,
-    refetchOnWindowFocus: false,
-    refetchOnReconnect: false,
-  });
+  const options = weatherAlertsOptions(filters);
+  const query = useInfiniteQuery(options);
 
   const { hasNextPage, fetchNextPage } = query;
   const pages = query.data?.pages;
@@ -59,7 +41,7 @@ export const useWeatherAlerts = (filters: AlertFilters = {}) => {
   };
 
   const refresh = () => {
-    return queryClient.resetQueries({ queryKey, exact: true });
+    return queryClient.resetQueries({ queryKey: options.queryKey, exact: true });
   };
 
   const retry = () => {

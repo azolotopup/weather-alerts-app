@@ -1,0 +1,30 @@
+* {
+  box-sizing: border-box;
+}
+
+:focus-visible {
+  outline: 3px solid #5388c6;
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: fixed;
+  top: -100px;
+  left: 16px;
+  z-index: 2000;
+  padding: 12px 18px;
+  background: #fff;
+  color: #174f85;
+  border-radius: 4px;
+}
+
+.skip-link:focus {
+  top: 12px;
+}
+
+.search-match {
+  background: #fff39a;
+  color: #17212b;
+  font-weight: 700;
+  border-radius: 4px;
+}

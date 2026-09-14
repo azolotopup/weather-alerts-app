@@ -4,7 +4,7 @@ import type { Alert, AlertFilters, AlertQuery, FilterKey, SortConfig } from './t
 
 export { AREA_CODES };
 
-export const PAGE_SIZE = 100;
+export const PAGE_SIZE = 20;
 export const DEFAULT_SORT: SortConfig = { column: 'severity', direction: 'desc' };
 export const FILTER_KEYS: FilterKey[] = [
   'area',

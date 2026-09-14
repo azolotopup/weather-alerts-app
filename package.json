@@ -1,0 +1,42 @@
+{
+  "name": "weather-alerts-app",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "postinstall": "bun generate:api",
+    "generate:api": "bunx openapi-typescript $BUN_PUBLIC_WSAPI_SCHEME_URL -o ./src/api/schema.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test",
+    "test:watch": "bun test --watch",
+    "test:coverage": "bun test --coverage",
+    "dev": "bun --hot src/index.ts",
+    "build": "bun build ./src/index.html --outdir=dist --sourcemap --target=browser --production --env='BUN_PUBLIC_*'",
+    "start": "NODE_ENV=production bun src/index.ts"
+  },
+  "dependencies": {
+    "@emotion/react": "11.14.0",
+    "@emotion/styled": "11.14.1",
+    "@mui/icons-material": "9.4.0",
+    "@mui/material": "9.4.0",
+    "@mui/x-date-pickers": "9.13.0",
+    "@tanstack/react-query": "5.102.8",
+    "dayjs": "1.11.23",
+    "openapi-fetch": "0.17.0",
+    "react": "19",
+    "react-dom": "19",
+    "zustand": "5.0.15"
+  },
+  "devDependencies": {
+    "@happy-dom/global-registrator": "20.14.5",
+    "@types/bun": "latest",
+    "@types/react": "19",
+    "@types/react-dom": "19",
+    "openapi-typescript": "7.13.0",
+    "prettier": "3.9.6"
+  },
+  "peerDependencies": {
+    "typescript": "5.9.3"
+  },
+  "module": "src/index.ts"
+}

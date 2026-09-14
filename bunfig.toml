@@ -1,0 +1,9 @@
+[serve.static]
+env = "BUN_PUBLIC_*"
+
+[test]
+root = "./src"
+preload = ["./src/test/dom.ts", "./src/test/setup.ts"]
+coverageReporter = ["text", "lcov"]
+coverageSkipTestFiles = true
+coveragePathIgnorePatterns = ["**/test/**", "**/api/schema.ts"]
